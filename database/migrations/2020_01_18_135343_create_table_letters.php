@@ -41,8 +41,6 @@ class CreateTableLetters extends Migration
      */
     public function down()
     {
-        Schema::table('letters', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('letters');
     }
 }
