@@ -1,5 +1,3 @@
-
-
 <!-- Sidebar -->
 <nav id="sidebar">
     <!-- Sidebar Content -->
@@ -28,8 +26,8 @@
                 <!-- Logo -->
                 <div class="content-header-item">
                     <a class="link-effect font-w700" href="/dashboard">
-                        <i class="si si-fire text-primary"></i>
-                        <span class="font-size-xl text-dual-primary-dark">code</span><span class="font-size-xl text-primary">base</span>
+                        <img width="30" height="30" src="https://img2.pngdownload.id/20180503/dcq/kisspng-pos-indonesia-mail-point-of-sale-logo-indonesia-5aeb329c06fe29.0749394715253633560287.jpg"></img>
+                        <span class="font-size-xl text-dual-primary-dark">SIMAS</span><span class="font-size-xl" style="color: orange">POS</span>
                     </a>
                 </div>
                 <!-- END Logo -->
@@ -77,29 +75,31 @@
             <ul class="nav-main">
                 <li>
                     <a class="{{ request()->is('dashboard') ? ' active' : '' }}" href="/dashboard">
-                        <i class="si si-cup"></i><span class="sidebar-mini-hide">Dashboard</span>
+                        <i class="si si-cup"></i><span class="sidebar-mini-hide">Home</span>
                     </a>
                 </li>
-                <li class="nav-main-heading">
-                    <span class="sidebar-mini-visible">VR</span><span class="sidebar-mini-hidden">Various</span>
+                <li>
+                    <a class="{{ request()->is('dashboard') ? ' active' : '' }}" href="/dashboard">
+                        <i class="si si-cup"></i><span class="sidebar-mini-hide">Semua Surat</span>
+                    </a>
                 </li>
                 <li class="{{ request()->is('examples/*') ? ' open' : '' }}">
-                    <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-bulb"></i><span class="sidebar-mini-hide">Examples</span></a>
+                    <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-bulb"></i><span class="sidebar-mini-hide">Data Master</span></a>
                     <ul>
                         <li>
-                            <a class="{{ request()->is('examples/plugin') ? ' active' : '' }}" href="/examples/plugin">Plugin</a>
+                            <a class="{{ request()->is('examples/plugin') ? ' active' : '' }}" href="/examples/plugin">Deputy</a>
                         </li>
                         <li>
-                            <a class="{{ request()->is('examples/blank') ? ' active' : '' }}" href="/examples/blank">Blank</a>
+                            <a class="{{ request()->is('examples/blank') ? ' active' : '' }}" href="/examples/blank">Kategori</a>
+                        </li>
+                        <li>
+                            <a class="{{ request()->is('examples/blank') ? ' active' : '' }}" href="/examples/blank">Sub Kategori</a>
                         </li>
                     </ul>
                 </li>
-                <li class="nav-main-heading">
-                    <span class="sidebar-mini-visible">MR</span><span class="sidebar-mini-hidden">More</span>
-                </li>
                 <li>
-                    <a href="/">
-                        <i class="si si-globe"></i><span class="sidebar-mini-hide">Landing</span>
+                    <a class="{{ request()->is('dashboard') ? ' active' : '' }}" href="/dashboard">
+                        <i class="si si-cup"></i><span class="sidebar-mini-hide">User Management</span>
                     </a>
                 </li>
             </ul>
