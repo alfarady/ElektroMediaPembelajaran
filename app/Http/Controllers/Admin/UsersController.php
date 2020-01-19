@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyUserRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use Illuminate\Http\Request;
 use App\Role;
 use App\User;
 
@@ -29,7 +30,7 @@ class UsersController extends Controller
         return view('admin.users.create', compact('roles'));
     }
 
-    public function store(StoreUserRequest $request)
+    public function store(Request $request)
     {
         abort_unless(\Gate::allows('user_create'), 403);
 
@@ -50,7 +51,7 @@ class UsersController extends Controller
         return view('admin.users.edit', compact('roles', 'user'));
     }
 
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(Request $request, User $user)
     {
         abort_unless(\Gate::allows('user_edit'), 403);
 

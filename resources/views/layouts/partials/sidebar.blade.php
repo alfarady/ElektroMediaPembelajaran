@@ -51,18 +51,7 @@
                 </a>
                 <ul class="list-inline mt-10">
                     <li class="list-inline-item">
-                        <a class="link-effect text-dual-primary-dark font-size-xs font-w600 text-uppercase" href="javascript:void(0)">J. Smith</a>
-                    </li>
-                    <li class="list-inline-item">
-                        <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
-                        <a class="link-effect text-dual-primary-dark" data-toggle="layout" data-action="sidebar_style_inverse_toggle" href="javascript:void(0)">
-                            <i class="si si-drop"></i>
-                        </a>
-                    </li>
-                    <li class="list-inline-item">
-                        <a class="link-effect text-dual-primary-dark" href="javascript:void(0)">
-                            <i class="si si-logout"></i>
-                        </a>
+                        <a class="link-effect text-dual-primary-dark font-size-xs font-w600 text-uppercase" href="javascript:void(0)">{{ auth()->user()->name }}</a>
                     </li>
                 </ul>
             </div>
@@ -83,6 +72,7 @@
                         <i class="si si-cup"></i><span class="sidebar-mini-hide">Semua Surat</span>
                     </a>
                 </li>
+                @if(auth()->user()->hasRole('Admin'))
                 <li class="{{ request()->is('examples/*') ? ' open' : '' }}">
                     <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-bulb"></i><span class="sidebar-mini-hide">Data Master</span></a>
                     <ul>
@@ -98,10 +88,11 @@
                     </ul>
                 </li>
                 <li>
-                    <a class="{{ request()->is('dashboard') ? ' active' : '' }}" href="/dashboard">
+                    <a class="{{ request()->is('admin/users') ? ' active' : '' }}" href="/admin/users">
                         <i class="si si-cup"></i><span class="sidebar-mini-hide">User Management</span>
                     </a>
                 </li>
+                @endif
             </ul>
         </div>
         <!-- END Side Navigation -->

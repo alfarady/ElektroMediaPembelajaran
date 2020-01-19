@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.backend')
 @section('content')
 
 <div class="card">
@@ -10,7 +10,7 @@
         <form action="{{ route("admin.users.store") }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
-                <label for="name">{{ trans('global.user.fields.name') }}*</label>
+                <label for="name">Nama Instansi*</label>
                 <input type="text" id="name" name="name" class="form-control" value="{{ old('name', isset($user) ? $user->name : '') }}">
                 @if($errors->has('name'))
                     <p class="help-block">
@@ -45,11 +45,45 @@
                     {{ trans('global.user.fields.password_helper') }}
                 </p>
             </div>
+            <div class="form-group {{ $errors->has('province') ? 'has-error' : '' }}">
+                <label for="province">Provinsi</label>
+                <input type="text" id="province" name="province" class="form-control">
+                @if($errors->has('province'))
+                    <p class="help-block">
+                        {{ $errors->first('province') }}
+                    </p>
+                @endif
+            </div>
+            <div class="form-group {{ $errors->has('city') ? 'has-error' : '' }}">
+                <label for="city">Kota</label>
+                <input type="text" id="city" name="city" class="form-control">
+                @if($errors->has('city'))
+                    <p class="help-block">
+                        {{ $errors->first('city') }}
+                    </p>
+                @endif
+            </div>
+            <div class="form-group {{ $errors->has('address') ? 'has-error' : '' }}">
+                <label for="address">Alamat</label>
+                <input type="text" id="address" name="address" class="form-control">
+                @if($errors->has('address'))
+                    <p class="help-block">
+                        {{ $errors->first('address') }}
+                    </p>
+                @endif
+            </div>
+            <div class="form-group {{ $errors->has('phone') ? 'has-error' : '' }}">
+                <label for="phone">Telephone/FAX</label>
+                <input type="text" id="phone" name="phone" class="form-control">
+                @if($errors->has('phone'))
+                    <p class="help-block">
+                        {{ $errors->first('phone') }}
+                    </p>
+                @endif
+            </div>
             <div class="form-group {{ $errors->has('roles') ? 'has-error' : '' }}">
                 <label for="roles">{{ trans('global.user.fields.roles') }}*
-                    <span class="btn btn-info btn-xs select-all">Select all</span>
-                    <span class="btn btn-info btn-xs deselect-all">Deselect all</span></label>
-                <select name="roles[]" id="roles" class="form-control select2" multiple="multiple">
+                <select name="roles[]" id="roles" class="form-control select2">
                     @foreach($roles as $id => $roles)
                         <option value="{{ $id }}" {{ (in_array($id, old('roles', [])) || isset($user) && $user->roles->contains($id)) ? 'selected' : '' }}>
                             {{ $roles }}

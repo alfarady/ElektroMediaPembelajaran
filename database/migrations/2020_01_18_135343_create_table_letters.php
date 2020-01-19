@@ -21,9 +21,9 @@ class CreateTableLetters extends Migration
             $table->integer('created_by')->unsigned();
             $table->enum('jenis_surat', ['masuk', 'keluar']);
             $table->string('nomor_surat');
-            $table->string('tanggal_surat');
+            $table->date('tanggal_surat');
             $table->text('perihal');
-            $table->text('isi_singkat');
+            $table->text('isi_singkat')->nullable();
             $table->timestamps();
             $table->softDeletes();
 

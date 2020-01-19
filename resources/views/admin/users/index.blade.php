@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.backend')
 @section('content')
 @can('user_create')
     <div style="margin-bottom: 10px;" class="row">
@@ -23,13 +23,13 @@
 
                         </th>
                         <th>
-                            {{ trans('global.user.fields.name') }}
+                            Nama Instansi
                         </th>
                         <th>
                             {{ trans('global.user.fields.email') }}
                         </th>
                         <th>
-                            {{ trans('global.user.fields.email_verified_at') }}
+                            Alamat
                         </th>
                         <th>
                             {{ trans('global.user.fields.roles') }}
@@ -61,12 +61,12 @@
                             </td>
                             <td>
                                 @can('user_show')
-                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.users.show', $user->id) }}">
+                                    <a class="btn btn-primary" href="{{ route('admin.users.show', $user->id) }}">
                                         {{ trans('global.view') }}
                                     </a>
                                 @endcan
                                 @can('user_edit')
-                                    <a class="btn btn-xs btn-info" href="{{ route('admin.users.edit', $user->id) }}">
+                                    <a class="btn btn-info" href="{{ route('admin.users.edit', $user->id) }}">
                                         {{ trans('global.edit') }}
                                     </a>
                                 @endcan
@@ -74,7 +74,7 @@
                                     <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                                        <input type="submit" class="btn btn-danger" value="{{ trans('global.delete') }}">
                                     </form>
                                 @endcan
                             </td>
@@ -87,7 +87,7 @@
     </div>
 </div>
 @endsection
-@section('scripts')
+@section('js_after')
 @parent
 <script>
     $(function () {

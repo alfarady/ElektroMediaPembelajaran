@@ -30,6 +30,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'province',
+        'city',
+        'address',
+        'phone',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -63,4 +67,24 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Role::class);
     }
+
+    public function getRoles()
+    {
+        $user = $this;
+
+        $roles = json_decode(json_encode($user->roles), true);
+
+        $roleName = [];
+        foreach($roles as $role) {
+            $roleName[] = $role['title'];
+        }
+        
+        return $roleName;
+    }
+
+    public function hasRole($role)
+    {
+        return in_array($role, $this->getRoles());
+    }
+
 }
