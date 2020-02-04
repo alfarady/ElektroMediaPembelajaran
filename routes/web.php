@@ -24,4 +24,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('products/destroy', 'ProductsController@massDestroy')->name('products.massDestroy');
 
     Route::resource('deputies', 'DeputyController');
+
+    Route::resource('categories', 'CategoryController');
+
+    Route::resource('subcategories', 'SubcategoryController');
 });

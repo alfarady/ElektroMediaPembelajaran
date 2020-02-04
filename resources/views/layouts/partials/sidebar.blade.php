@@ -77,13 +77,14 @@
                     <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-bulb"></i><span class="sidebar-mini-hide">Data Master</span></a>
                     <ul>
                         <li>
-                            <a class="{{ request()->is('examples/plugin') ? ' active' : '' }}" href="/examples/plugin">Deputy</a>
+                            <a class="{{ request()->is('examples/plugin') ? ' active' : '' }}" href="{{ action('Admin\DeputyController@index') }}">Deputy</a>
                         </li>
                         <li>
-                            <a class="{{ request()->is('examples/blank') ? ' active' : '' }}" href="/examples/blank">Kategori</a>
+                            <a class="{{ request()->is('examples/blank') ? ' active' : '' }}" href="{{ action('Admin\CategoryController@index') }}">Kategori</a>
+                        </li>
                         </li>
                         <li>
-                            <a class="{{ request()->is('examples/blank') ? ' active' : '' }}" href="/examples/blank">Sub Kategori</a>
+                            <a class="{{ request()->is('examples/blank') ? ' active' : '' }}" href="{{ action('Admin\SubcategoryController@index') }}"">Sub Kategori</a>
                         </li>
                     </ul>
                 </li>

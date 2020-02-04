@@ -4,8 +4,8 @@
     <div class="col-lg-12">
         <button type="button"
             class="btn btn-success btn-modal"
-            data-href="{{action('Admin\DeputyController@create')}}"
-            data-container=".add_form">{{ __('Tambah Deputy') }}</button>
+            data-href="{{action('Admin\CategoryController@create')}}"
+            data-container=".add_form">{{ __('Tambah Kategori') }}</button>
     </div>
 </div>
 
@@ -20,7 +20,7 @@
 
 <div class="card">
     <div class="card-header">
-        List Deputy
+        List Kategori
     </div>
 
     <div class="card-body">
@@ -32,10 +32,10 @@
 
                         </th>
                         <th>
-                            Deputy
+                            Kategori
                         </th>
                         <th>
-                            Bagian
+                            Deputy
                         </th>
                         <th>
                             &nbsp;
@@ -52,11 +52,11 @@
                             {{$value->name}}
                         </td>
                         <td>
-                            {{$value->name_bagian}}
+                            {{$value->deputy->name}} {{ $value->deputy->name_bagian ? '- '.$value->deputy->name_bagian : '' }}
                         </td>
                         <td>
-                            <i class="fa fa-edit fa-lg edit_action" href="{{ action('Admin\DeputyController@edit', $value->id) }}" style="cursor:pointer;margin-right:10px;"></i>
-                            <i class="fa fa-trash fa-lg delete_action" href="{{ action('Admin\DeputyController@destroy', $value->id) }}" style="cursor:pointer;margin-right:10px;"></i>
+                            <i class="fa fa-edit fa-lg edit_action" href="{{ action('Admin\CategoryController@edit', $value->id) }}" style="cursor:pointer;margin-right:10px;"></i>
+                            <i class="fa fa-trash fa-lg delete_action" href="{{ action('Admin\CategoryController@destroy', $value->id) }}" style="cursor:pointer;margin-right:10px;"></i>
                         </td>
                     </tr>
                     @endforeach

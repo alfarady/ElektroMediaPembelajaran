@@ -4,8 +4,8 @@
     <div class="col-lg-12">
         <button type="button"
             class="btn btn-success btn-modal"
-            data-href="{{action('Admin\DeputyController@create')}}"
-            data-container=".add_form">{{ __('Tambah Deputy') }}</button>
+            data-href="{{action('Admin\SubcategoryController@create')}}"
+            data-container=".add_form">{{ __('Tambah Sub Kategori') }}</button>
     </div>
 </div>
 
@@ -20,7 +20,7 @@
 
 <div class="card">
     <div class="card-header">
-        List Deputy
+        List Sub Kategori
     </div>
 
     <div class="card-body">
@@ -32,10 +32,16 @@
 
                         </th>
                         <th>
+                            Sub Kategori
+                        </th>
+                        <th>
+                            Kategori
+                        </th>
+                        <th>
                             Deputy
                         </th>
                         <th>
-                            Bagian
+                            Index
                         </th>
                         <th>
                             &nbsp;
@@ -52,11 +58,17 @@
                             {{$value->name}}
                         </td>
                         <td>
-                            {{$value->name_bagian}}
+                            {{$value->category->name}}
                         </td>
                         <td>
-                            <i class="fa fa-edit fa-lg edit_action" href="{{ action('Admin\DeputyController@edit', $value->id) }}" style="cursor:pointer;margin-right:10px;"></i>
-                            <i class="fa fa-trash fa-lg delete_action" href="{{ action('Admin\DeputyController@destroy', $value->id) }}" style="cursor:pointer;margin-right:10px;"></i>
+                            {{$value->category->deputy->name}} {{ $value->category->deputy->name_bagian ? '- '.$value->category->deputy->name_bagian : '' }}
+                        </td>
+                        <td>
+                            {{$value->index}}
+                        </td>
+                        <td>
+                            <i class="fa fa-edit fa-lg edit_action" href="{{ action('Admin\SubcategoryController@edit', $value->id) }}" style="cursor:pointer;margin-right:10px;"></i>
+                            <i class="fa fa-trash fa-lg delete_action" href="{{ action('Admin\SubcategoryController@destroy', $value->id) }}" style="cursor:pointer;margin-right:10px;"></i>
                         </td>
                     </tr>
                     @endforeach
@@ -65,8 +77,8 @@
         </div>
     </div>
 </div>
-<div class="modal fade bd-example-modal-lg add_form" style="z-index: 9999;" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true"></div>
-<div class="modal fade bd-example-modal-lg edit_form" style="z-index: 9999;" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true"></div>
+<div class="modal fade bd-example-modal-lg add_form" style="z-index: 9999;" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true"></div>
+<div class="modal fade bd-example-modal-lg edit_form" style="z-index: 9999;" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true"></div>
 
 @endsection
 @section('js_after')

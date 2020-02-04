@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Deputy;
+use App\Category;
+use App\SubCategory;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
-class DeputyController extends Controller
+class SubcategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +18,8 @@ class DeputyController extends Controller
      */
     public function index()
     {
-        $data = Deputy::all();
-        return view('admin.deputy.index', compact('data'));
+        $data = SubCategory::all();
+        return view('admin.subcategory.index', compact('data'));
     }
 
     /**
@@ -27,7 +29,8 @@ class DeputyController extends Controller
      */
     public function create()
     {
-        return view('admin.deputy.create');
+        $categories = Category::all();
+        return view('admin.subcategory.create', compact('categories'));
     }
 
     /**
@@ -39,18 +42,22 @@ class DeputyController extends Controller
     public function store(Request $request)
     {
         try {
+            $validatedData = $request->validate([
+                'index' => 'required|unique:sub_categories',
+            ]);
+
             $input = $request->all();
 
-            Deputy::create($input);
+            SubCategory::create($input);
 
             return redirect()->back()->with('response', [
                 'status' => true,
-                'message' => 'Berhasil menambahkan deputy'
+                'message' => 'Berhasil menambahkan sub kategori'
             ]);
         } catch(\Exception $e) {
             return redirect()->back()->with('response', [
                 'status' => false,
-                'message' => 'Gagal menambahkan deputy'
+                'message' => 'Gagal menambahkan sub kategori'
             ]);
         }
     }
@@ -74,8 +81,10 @@ class DeputyController extends Controller
      */
     public function edit($id)
     {
-        $data = Deputy::find($id);
-        return view('admin.deputy.edit', compact('data'));
+        $subcategory = SubCategory::find($id);
+        $categories = Category::all();
+
+        return view('admin.subcategory.edit', compact(['subcategory', 'categories']));
     }
 
     /**
@@ -88,18 +97,21 @@ class DeputyController extends Controller
     public function update(Request $request, $id)
     {
         try {
+            $validatedData = $request->validate([
+                'index' => 'required|unique:sub_categories',
+            ]);
             $input = $request->all();
 
-            Deputy::find($id)->update($input);
+            SubCategory::find($id)->update($input);
 
             return redirect()->back()->with('response', [
                 'status' => true,
-                'message' => 'Berhasil update deputy'
+                'message' => 'Berhasil update sub kategori'
             ]);
         } catch(\Exception $e) {
             return redirect()->back()->with('response', [
                 'status' => false,
-                'message' => 'Gagal update deputy'
+                'message' => 'Gagal update sub kategori'
             ]);
         }
     }
@@ -113,11 +125,11 @@ class DeputyController extends Controller
     public function destroy($id)
     {
         try {
-            Deputy::find($id)->delete();
+            SubCategory::find($id)->delete();
 
-            return response()->json(['status' => true, 'message' => "Berhasil menghapus deputy"]);
+            return response()->json(['status' => true, 'message' => "Berhasil menghapus sub kategori"]);
         } catch(\Exception $e) {
-            return response()->json(['status' => false, 'message' => "Gagal menghapus deputy"]);
+            return response()->json(['status' => false, 'message' => "Gagal menghapus sub kategori"]);
         }
     }
 }

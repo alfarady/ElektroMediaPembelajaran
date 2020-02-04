@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Deputy;
+use App\Category;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
-class DeputyController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +17,8 @@ class DeputyController extends Controller
      */
     public function index()
     {
-        $data = Deputy::all();
-        return view('admin.deputy.index', compact('data'));
+        $data = Category::all();
+        return view('admin.category.index', compact('data'));
     }
 
     /**
@@ -27,7 +28,8 @@ class DeputyController extends Controller
      */
     public function create()
     {
-        return view('admin.deputy.create');
+        $deputies = Deputy::all();
+        return view('admin.category.create', compact('deputies'));
     }
 
     /**
@@ -41,16 +43,16 @@ class DeputyController extends Controller
         try {
             $input = $request->all();
 
-            Deputy::create($input);
+            Category::create($input);
 
             return redirect()->back()->with('response', [
                 'status' => true,
-                'message' => 'Berhasil menambahkan deputy'
+                'message' => 'Berhasil menambahkan kategori'
             ]);
         } catch(\Exception $e) {
             return redirect()->back()->with('response', [
                 'status' => false,
-                'message' => 'Gagal menambahkan deputy'
+                'message' => 'Gagal menambahkan kategori'
             ]);
         }
     }
@@ -74,8 +76,10 @@ class DeputyController extends Controller
      */
     public function edit($id)
     {
-        $data = Deputy::find($id);
-        return view('admin.deputy.edit', compact('data'));
+        $category = Category::find($id);
+        $deputies = Deputy::all();
+
+        return view('admin.category.edit', compact(['category', 'deputies']));
     }
 
     /**
@@ -90,16 +94,16 @@ class DeputyController extends Controller
         try {
             $input = $request->all();
 
-            Deputy::find($id)->update($input);
+            Category::find($id)->update($input);
 
             return redirect()->back()->with('response', [
                 'status' => true,
-                'message' => 'Berhasil update deputy'
+                'message' => 'Berhasil update kategori'
             ]);
         } catch(\Exception $e) {
             return redirect()->back()->with('response', [
                 'status' => false,
-                'message' => 'Gagal update deputy'
+                'message' => 'Gagal update kategori'
             ]);
         }
     }
@@ -113,11 +117,11 @@ class DeputyController extends Controller
     public function destroy($id)
     {
         try {
-            Deputy::find($id)->delete();
+            Category::find($id)->delete();
 
-            return response()->json(['status' => true, 'message' => "Berhasil menghapus deputy"]);
+            return response()->json(['status' => true, 'message' => "Berhasil menghapus kategori"]);
         } catch(\Exception $e) {
-            return response()->json(['status' => false, 'message' => "Gagal menghapus deputy"]);
+            return response()->json(['status' => false, 'message' => "Gagal menghapus kategori"]);
         }
     }
 }
