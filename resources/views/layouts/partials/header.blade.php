@@ -99,7 +99,7 @@
                         <i class="si si-user mr-5"></i> Profile
                     </a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="javascript:void(0)">
+                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                         <i class="si si-logout mr-5"></i> Sign Out
                     </a>
                 </div>
@@ -111,6 +111,10 @@
         <!-- END Right Section -->
     </div>
     <!-- END Header Content -->
+
+    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+        @csrf
+    </form>
 
     <!-- Header Search -->
     <div id="page-header-search" class="overlay-header">

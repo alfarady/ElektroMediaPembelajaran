@@ -4,7 +4,8 @@
     <div class="login-logo">
         <div class="login-logo">
             <a href="#">
-                {{ trans('global.site_title') }}
+                <span style="font-size: 20px">Selamat Datang di Website SIMASPOS</span><br>
+                PT. POS INDONESIA
             </a>
         </div>
     </div>
