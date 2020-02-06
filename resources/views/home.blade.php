@@ -12,7 +12,7 @@
                 <div class="float-left mt-10 d-none d-sm-block">
                     <i class="si si-users fa-3x text-body-bg-dark"></i>
                 </div>
-                <div class="font-size-h3 font-w600" data-toggle="countTo" data-speed="1000" data-to="0">0</div>
+                <div class="font-size-h3 font-w600" data-toggle="countTo" data-speed="1000" data-to="{{ $counts->all }}">0</div>
                 <div class="font-size-sm font-w600 text-uppercase text-muted">Jumlah Semua Surat</div>
             </div>
         </a>
@@ -23,7 +23,7 @@
                 <div class="float-left mt-10 d-none d-sm-block">
                     <i class="si si-users fa-3x text-body-bg-dark"></i>
                 </div>
-                <div class="font-size-h3 font-w600"><span data-toggle="countTo" data-speed="1000" data-to="0">0</span></div>
+                <div class="font-size-h3 font-w600"><span data-toggle="countTo" data-speed="1000" data-to="{{ $counts->in }}">0</span></div>
                 <div class="font-size-sm font-w600 text-uppercase text-muted">Surat Masuk</div>
             </div>
         </a>
@@ -34,7 +34,7 @@
                 <div class="float-left mt-10 d-none d-sm-block">
                     <i class="si si-users fa-3x text-body-bg-dark"></i>
                 </div>
-                <div class="font-size-h3 font-w600" data-toggle="countTo" data-speed="1000" data-to="0">0</div>
+                <div class="font-size-h3 font-w600" data-toggle="countTo" data-speed="1000" data-to="{{ $counts->out }}">0</div>
                 <div class="font-size-sm font-w600 text-uppercase text-muted">Surat Keluar</div>
             </div>
         </a>

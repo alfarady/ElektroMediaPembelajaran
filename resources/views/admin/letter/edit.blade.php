@@ -3,12 +3,13 @@
 
 <div class="card">
     <div class="card-header">
-        Tambah Surat
+        Edit Surat
     </div>
 
     <div class="card-body">
-        <form action="{{ action('Admin\LetterController@store') }}" method="POST">
+        <form action="{{ action('Admin\LetterController@update', $letter->id) }}" method="POST">
             @csrf
+            @method('PUT')
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-group {{ $errors->has('deputy_id') ? 'has-error' : '' }}">
@@ -16,7 +17,7 @@
                         <select class="form-control" id="deputy_id" name="deputy_id" required>
                             <option>Pilih Deputy</option>
                             @foreach ($deputies as $deputy)
-                                <option value="{{$deputy->id}}">{{$deputy->name}}</option>
+                                <option value="{{$deputy->id}}" @if($deputy->id == $letter->deputy_id) selected @endif>{{$deputy->name}}</option>
                             @endforeach
                         </select>
                         @if($errors->has('deputy_id'))
@@ -31,6 +32,7 @@
                         <label for="category_id">Kategori*</label>
                         <select class="form-control" id="category_id" name="category_id" required>
                             <option>Pilih Kategori</option>
+                            <option value="{{$letter->category_id}}" selected>{{$letter->category->name}}</option>
                         </select>
                         @if($errors->has('category_id'))
                             <p class="help-block">
@@ -44,6 +46,7 @@
                         <label for="sub_category_id">Sub Kategori*</label>
                         <select class="form-control" id="sub_category_id" name="sub_category_id" required>
                             <option>Pilih Sub Kategori</option>
+                            <option value="{{$letter->sub_category_id}}" selected>{{$letter->sub_category->name}}</option>
                         </select>
                         @if($errors->has('sub_category_id'))
                             <p class="help-block">
@@ -57,8 +60,8 @@
             <div class="form-group {{ $errors->has('jenis_surat') ? 'has-error' : '' }}">
                 <label for="jenis_surat">Jenis Surat*</label>
                 <select class="form-control" id="jenis_surat" name="jenis_surat" required>
-                    <option value="masuk">Masuk</option>
-                    <option value="keluar">Keluar</option>
+                    <option value="masuk" @if($letter->jenis_surat == 'masuk') selected @endif>Masuk</option>
+                    <option value="keluar" @if($letter->jenis_surat == 'keluar') selected @endif>Keluar</option>
                 </select>
                 @if($errors->has('jenis_surat'))
                     <p class="help-block">
@@ -76,10 +79,13 @@
                     </p>
                 @endif
             </div>
-
+            @php
+                $date = \DateTime::createFromFormat('Y-m-d', $letter->tanggal_surat);
+                $output = $date->format('d/m/Y');
+            @endphp
             <div class="form-group {{ $errors->has('tanggal_surat') ? 'has-error' : '' }}">
                 <label for="tanggal_surat">Tanggal Surat*</label>
-                <input type="text" id="tanggal_surat" name="tanggal_surat" class="form-control" placeholder="25/01/2020" value="{{ old('tanggal_surat', isset($letter) ? $letter->tanggal_surat : '') }}" pattern="\d{1,2}/\d{1,2}/\d{4}" required>
+                <input type="text" id="tanggal_surat" name="tanggal_surat" class="form-control" placeholder="25/01/2020" value="{{ old('tanggal_surat', isset($output) ? $output : '') }}" pattern="\d{1,2}/\d{1,2}/\d{4}" required>
                 @if($errors->has('tanggal_surat'))
                     <p class="help-block">
                         {{ $errors->first('tanggal_surat') }}
@@ -118,7 +124,10 @@
 @section('js_after')
     <script>
         $( document ).ready(function() {
-        $('#deputy_id').change();
+            $('#deputy_id').change();
+            if($('#jenis_surat').val() == 'keluar') {
+                $('#nomor_surat').prop('disabled', true);
+            }
         });
 
         $('#deputy_id').on('change', function() {

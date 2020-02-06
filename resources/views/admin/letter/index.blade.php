@@ -72,7 +72,7 @@
                             {{$value->jenis_surat}}
                         </td>
                         <td>
-                            <i class="fa fa-edit fa-lg edit_action" href="{{ action('Admin\LetterController@edit', $value->id) }}" style="cursor:pointer;margin-right:10px;"></i>
+                            <a class="fa fa-edit fa-lg" href="{{ action('Admin\LetterController@edit', $value->id) }}" style="cursor:pointer;margin-right:10px;color:black"></a>
                             <i class="fa fa-trash fa-lg delete_action" href="{{ action('Admin\LetterController@destroy', $value->id) }}" style="cursor:pointer;margin-right:10px;"></i>
                         </td>
                     </tr>

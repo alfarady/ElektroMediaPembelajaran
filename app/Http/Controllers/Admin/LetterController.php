@@ -82,7 +82,9 @@ class LetterController extends Controller
      */
     public function edit($id)
     {
-        //
+        $deputies = Deputy::all();
+        $letter = Letter::find($id);
+        return view('admin.letter.edit', compact(['deputies', 'letter']));
     }
 
     /**
@@ -94,7 +96,24 @@ class LetterController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            $input = $request->all();
+            $date = \DateTime::createFromFormat('d/m/Y', $input['tanggal_surat']);
+            $output = $date->format('Y-m-d');
+            $input['tanggal_surat'] = date('Y-m-d', strtotime($output));
+
+            Letter::find($id)->update($input);
+
+            return redirect()->route('admin.letters.index')->with('response', [
+                'status' => true,
+                'message' => 'Berhasil update surat'
+            ]);
+        } catch(\Exception $e) {
+            return redirect()->route('admin.letters.index')->with('response', [
+                'status' => false,
+                'message' => 'Gagal update surat'
+            ]);
+        }
     }
 
     /**
@@ -105,7 +124,13 @@ class LetterController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            Letter::find($id)->delete();
+
+            return response()->json(['status' => true, 'message' => "Berhasil menghapus surat"]);
+        } catch(\Exception $e) {
+            return response()->json(['status' => false, 'message' => "Gagal menghapus surat"]);
+        }
     }
 
     /*

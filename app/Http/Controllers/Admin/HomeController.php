@@ -2,10 +2,20 @@
 
 namespace App\Http\Controllers\Admin;
 
-class HomeController
+use App\Letter;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+
+class HomeController extends Controller
 {
     public function index()
     {
-        return view('home');
+        $counts = (object)[
+            'all' => Letter::count(),
+            'in' => Letter::where('jenis_surat', 'masuk')->count(),
+            'out' => Letter::where('jenis_surat', 'keluar')->count(),
+        ];
+        return view('home', compact('counts'));
     }
 }
