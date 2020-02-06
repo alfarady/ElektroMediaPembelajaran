@@ -23,6 +23,49 @@
     </div>
 
     <div class="card-body">
+        <div class="row pb-4">
+            <div class="col-md-3">
+                <select class="form-control" name="jenis_surat" id="jenis_surat">
+                    <option value="all">Semua Surat</option>
+                    <option value="masuk" @if(request()->input('jenis_surat') == 'masuk') selected @endif>Surat Masuk</option>
+                    <option value="keluar" @if(request()->input('jenis_surat') == 'keluar') selected @endif>Surat Keluar</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <select class="form-control select2" name="deputy_id" id="deputy_id">
+                    <option value="all">Semua Deputy</option>
+                    @foreach ($deputies as $deputy)
+                        <option value="{{$deputy->id}}" @if(request()->input('deputy_id') == $deputy->id) selected @endif>{{$deputy->name}}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="col-md-3">
+                <select class="form-control select2" name="category_id" id="category_id">
+                    <option value="all">Semua Kategori</option>
+                    @foreach ($categories as $category)
+                        <option value="{{$category->id}}" @if(request()->input('category_id') == $category->id) selected @endif>{{$category->name}}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="col-md-3">
+                <select class="form-control select2" name="sub_category_id" id="sub_category_id">
+                    <option value="all">Semua Sub Kategori</option>
+                    @foreach ($sub_categories as $sub_category)
+                        <option value="{{$sub_category->id}}" @if(request()->input('sub_category_id') == $sub_category->id) selected @endif>{{$sub_category->name}}</option>
+                    @endforeach
+                </select>
+            </div>
+            @if(auth()->user()->hasRole('Admin'))
+            <div class="col-md pt-3">
+                <select class="form-control select2" name="created_by" id="created_by">
+                    <option value="all">Semua Instansi</option>
+                    @foreach ($users as $user)
+                        <option value="{{$user->id}}" @if(request()->input('created_by') == $user->id) selected @endif>{{$user->name}}</option>
+                    @endforeach
+                </select>
+            </div>
+            @endif
+        </div>
         <div class="table-responsive">
             <table class=" table table-bordered table-striped table-hover datatable">
                 <thead>
@@ -89,6 +132,78 @@
 @section('js_after')
 @parent
 <script>
+    $( document ).ready(function() {
+        $('.select2').select2({ width: '100%' });
+        $('#jenis_surat').on('change', function() {
+            if(this.value != 'all') {
+                var url = new URL(window.location.href);
+                url.searchParams.set('jenis_surat',this.value);
+                window.location.href = url.href;
+                console.log(window.location.href);
+            } else {
+                var url = new URL(window.location.href);
+                url.searchParams.delete('jenis_surat');
+                window.location.href = url.href;
+            }
+        });
+        $('#deputy_id').on('change', function() {
+            if(this.value != 'all') {
+                var url = new URL(window.location.href);
+                url.searchParams.set('deputy_id',this.value);
+                url.searchParams.delete('category_id');
+                url.searchParams.delete('sub_category_id');
+                window.location.href = url.href;
+                console.log(window.location.href);
+            } else {
+                var url = new URL(window.location.href);
+                url.searchParams.delete('deputy_id');
+                url.searchParams.delete('category_id');
+                url.searchParams.delete('sub_category_id');
+                window.location.href = url.href;
+            }
+        });
+        $('#category_id').on('change', function() {
+            if(this.value != 'all') {
+                var url = new URL(window.location.href);
+                url.searchParams.set('category_id',this.value);
+                url.searchParams.delete('sub_category_id');
+                window.location.href = url.href;
+                console.log(window.location.href);
+            } else {
+                var url = new URL(window.location.href);
+                url.searchParams.delete('category_id');
+                url.searchParams.delete('sub_category_id');
+                window.location.href = url.href;
+            }
+        });
+        $('#sub_category_id').on('change', function() {
+            if(this.value != 'all') {
+                var url = new URL(window.location.href);
+                url.searchParams.set('sub_category_id',this.value);
+                window.location.href = url.href;
+                console.log(window.location.href);
+            } else {
+                var url = new URL(window.location.href);
+                url.searchParams.delete('sub_category_id');
+                window.location.href = url.href;
+            }
+        });
+        @if(auth()->user()->hasRole('Admin'))
+            $('#created_by').on('change', function() {
+                if(this.value != 'all') {
+                    var url = new URL(window.location.href);
+                    url.searchParams.set('created_by',this.value);
+                    window.location.href = url.href;
+                    console.log(window.location.href);
+                } else {
+                    var url = new URL(window.location.href);
+                    url.searchParams.delete('created_by');
+                    window.location.href = url.href;
+                }
+            });
+        @endif
+    });
+
     $(function () {
   let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
   let deleteButton = {

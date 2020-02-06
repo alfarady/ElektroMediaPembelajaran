@@ -6,6 +6,7 @@ use App\Deputy;
 use App\Category;
 use App\SubCategory;
 use App\Letter;
+use App\User;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -19,8 +20,42 @@ class LetterController extends Controller
      */
     public function index()
     {
-        $data = Letter::all();
-        return view('admin.letter.index', compact('data'));
+        if(auth()->user()->hasRole('Admin')) {
+            $data = new Letter();
+        } else {
+            $data = Letter::where('created_by', auth()->user()->id);
+        }
+
+        $users = User::all();
+        $deputies = Deputy::all();
+        $categories = [];
+        $sub_categories = [];
+
+        if(request()->input('jenis_surat')) {
+            $data = $data->where('jenis_surat', request()->input('jenis_surat'));
+        }
+
+        if(request()->input('deputy_id')) {
+            $categories = Category::where('deputy_id', request()->input('deputy_id'))->get();
+            $data = $data->where('deputy_id', request()->input('deputy_id'));
+        }
+
+        if(request()->input('category_id')) {
+            $sub_categories = SubCategory::where('category_id', request()->input('category_id'))->get();
+            $data = $data->where('category_id', request()->input('category_id'));
+        }
+
+        if(request()->input('sub_category_id')) {
+            $data = $data->where('sub_category_id', request()->input('sub_category_id'));
+        }
+
+        if(request()->input('created_by')) {
+            $data = $data->where('created_by', request()->input('created_by'));
+        }
+
+        $data = $data->get();
+
+        return view('admin.letter.index', compact(['data', 'deputies', 'categories', 'sub_categories', 'users']));
     }
 
     /**
