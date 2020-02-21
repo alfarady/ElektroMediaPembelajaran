@@ -15,6 +15,7 @@ class HomeController extends Controller
             'all' => Letter::count(),
             'in' => Letter::where('jenis_surat', 'masuk')->count(),
             'out' => Letter::where('jenis_surat', 'keluar')->count(),
+            'archive' => Letter::onlyTrashed()->count(),
         ];
         return view('home', compact('counts'));
     }
