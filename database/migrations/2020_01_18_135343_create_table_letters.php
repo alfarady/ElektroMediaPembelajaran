@@ -15,14 +15,14 @@ class CreateTableLetters extends Migration
     {
         Schema::create('letters', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('deputy_id')->unsigned();
-            $table->integer('category_id')->unsigned();
-            $table->integer('sub_category_id')->unsigned();
+            $table->integer('deputy_id')->unsigned()->nullable();
+            $table->integer('category_id')->unsigned()->nullable();
+            $table->integer('sub_category_id')->unsigned()->nullable();
             $table->integer('created_by')->unsigned();
             $table->enum('jenis_surat', ['masuk', 'keluar']);
             $table->string('nomor_surat');
             $table->date('tanggal_surat');
-            $table->text('perihal');
+            $table->text('perihal')->nullable();
             $table->text('isi_singkat')->nullable();
             $table->timestamps();
             $table->softDeletes();

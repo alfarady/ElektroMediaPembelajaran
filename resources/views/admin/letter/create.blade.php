@@ -3,12 +3,13 @@
 
 <div class="card">
     <div class="card-header">
-        Tambah Surat
+        Tambah Surat {{ request()->input('jenis_surat') == 'keluar' ? 'Keluar' : 'Masuk' }}
     </div>
 
     <div class="card-body">
         <form action="{{ action('Admin\LetterController@store') }}" method="POST">
             @csrf
+            @if(request()->input('jenis_surat') == 'keluar')
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-group {{ $errors->has('deputy_id') ? 'has-error' : '' }}">
@@ -53,23 +54,13 @@
                     </div>
                 </div>
             </div>
+            @endif
 
-            <div class="form-group {{ $errors->has('jenis_surat') ? 'has-error' : '' }}">
-                <label for="jenis_surat">Jenis Surat*</label>
-                <select class="form-control" id="jenis_surat" name="jenis_surat" required>
-                    <option value="masuk">Masuk</option>
-                    <option value="keluar">Keluar</option>
-                </select>
-                @if($errors->has('jenis_surat'))
-                    <p class="help-block">
-                        {{ $errors->first('jenis_surat') }}
-                    </p>
-                @endif
-            </div>
+            <input type="hidden" id="jenis_surat" name="jenis_surat" value="{{request()->input('jenis_surat')}}">
 
             <div class="form-group {{ $errors->has('nomor_surat') ? 'has-error' : '' }}">
                 <label for="nomor_surat">Nomor Surat*</label>
-                <input type="text" id="nomor_surat" name="nomor_surat" class="form-control" value="{{ old('nomor_surat', isset($letter) ? $letter->nomor_surat : '') }}" required>
+                <input type="text" id="nomor_surat" name="nomor_surat" class="form-control" value="{{ old('nomor_surat', isset($letter) ? $letter->nomor_surat : '') }}" {{request()->input('jenis_surat') == 'keluar' ? 'readonly' : ''}} required>
                 @if($errors->has('nomor_surat'))
                     <p class="help-block">
                         {{ $errors->first('nomor_surat') }}
@@ -86,9 +77,31 @@
                     </p>
                 @endif
             </div>
+            
+            @if(request()->input('jenis_surat') == 'masuk')
+            <div class="form-group {{ $errors->has('disposisi') ? 'has-error' : '' }}">
+                <label for="disposisi">Disposisi*</label>
+                <select class="form-control" id="disposisi" name="disposisi" required>
+                    <option>Pilih Disposisi</option>
+                    <option value="dukungan_umum_sdm" @if(request()->input('disposisi') == 'dukungan_umum_sdm') selected @endif>DUKUNGAN UMUM (SDM)</option>
+                    <option value="dukungan_umum_sarana" @if(request()->input('disposisi') == 'dukungan_umum_sarana') selected @endif>DUKUNGAN UMUM (SARANA)</option>
+                    <option value="dukungan_umum_it" @if(request()->input('disposisi') == 'dukungan_umum_it') selected @endif>DUKUNGAN UMUM (IT)</option>
+                    <option value="pelayanan" @if(request()->input('disposisi') == 'pelayanan') selected @endif>PELAYANAN</option>
+                    <option value="keuangan_akuntansi" @if(request()->input('disposisi') == 'keuangan_akuntansi') selected @endif>KEUANGAN & AKUNTANSI</option>
+                    <option value="penjualan_inlog" @if(request()->input('disposisi') == 'penjualan_inlog') selected @endif>PENJUALAN & INLOG</option>
+                    <option value="pengolahan" @if(request()->input('disposisi') == 'pengolahan') selected @endif>PENGOLAHAN</option>
+                    <option value="slpk" @if(request()->input('disposisi') == 'slpk') selected @endif>SLPK</option>
+                </select>
+                @if($errors->has('disposisi'))
+                    <p class="help-block">
+                        {{ $errors->first('disposisi') }}
+                    </p>
+                @endif
+            </div>
+            @endif
 
             <div class="form-group {{ $errors->has('perihal') ? 'has-error' : '' }}">
-                <label for="perihal">Perihal*</label>
+                <label for="perihal">Jenis Surat & Pengirim*</label>
                 <textarea class="form-control" id="perihal" name="perihal" required>{{ old('perihal', isset($letter) ? $letter->perihal : '') }}</textarea>
                 @if($errors->has('perihal'))
                     <p class="help-block">
@@ -136,7 +149,7 @@
                         $category_id.append('<option value=' + data[i].id + '>' + data[i].name + '</option>');
                     }
                     $category_id.change();
-
+                    getRefNo();
                 }
             });
         });
@@ -153,21 +166,20 @@
                         $sub_category_id.append('<option value=' + data[i].id + '>' + data[i].name + '</option>');
                     }
                     $sub_category_id.change();
-
+                    getRefNo();
                 }
             });
         });
 
-        $('#jenis_surat').on('change', function() {
-            if(this.value == 'keluar') {
+        $('#sub_category_id').on('change', function() {
+            getRefNo();
+        });
+
+        function getRefNo() {
+            if($('#jenis_surat').val() == 'keluar') {
                 if($('#deputy_id').val() == 'Pilih Deputy' || $('#category_id').val() == 'Pilih Kategori' || $('#sub_category_id').val() == 'Pilih Sub Kategori')
                 {
-                    $(this).val('masuk');
-                    return Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: 'Isi form deputy / kategori / sub kategori!',
-                    })
+                    return;
                 }
                 $('#nomor_surat').prop('readonly', true);
                 $.ajax({
@@ -182,6 +194,6 @@
                 $('#nomor_surat').prop('readonly', false);
                 $('#nomor_surat').val('');
             } 
-        });
+        }
     </script>    
 @endsection

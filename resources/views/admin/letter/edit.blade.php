@@ -3,21 +3,22 @@
 
 <div class="card">
     <div class="card-header">
-        Edit Surat
+        Edit Surat {{ $letter->jenis_surat == 'keluar' ? 'Keluar' : 'Masuk' }}
     </div>
 
     <div class="card-body">
         <form action="{{ action('Admin\LetterController@update', $letter->id) }}" method="POST">
             @csrf
             @method('PUT')
+            @if($letter->jenis_surat == 'keluar')
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-group {{ $errors->has('deputy_id') ? 'has-error' : '' }}">
                         <label for="deputy_id">Deputy*</label>
-                        <select class="form-control" id="deputy_id" name="deputy_id" required>
-                            <option>Pilih Deputy</option>
+                        <select class="form-control" id="deputy_id" name="deputy_id" readonly required>
+                            <option disabled>Pilih Deputy</option>
                             @foreach ($deputies as $deputy)
-                                <option value="{{$deputy->id}}" @if($deputy->id == $letter->deputy_id) selected @endif>{{$deputy->name}}</option>
+                                <option value="{{$deputy->id}}" @if($deputy->id == $letter->deputy_id) selected @else disabled @endif>{{$deputy->name}}</option>
                             @endforeach
                         </select>
                         @if($errors->has('deputy_id'))
@@ -30,8 +31,8 @@
                 <div class="col-md-4">
                     <div class="form-group {{ $errors->has('category_id') ? 'has-error' : '' }}">
                         <label for="category_id">Kategori*</label>
-                        <select class="form-control" id="category_id" name="category_id" required>
-                            <option>Pilih Kategori</option>
+                        <select class="form-control" id="category_id" name="category_id" readonly required>
+                            <option disabled>Pilih Kategori</option>
                             <option value="{{$letter->category_id}}" selected>{{$letter->category->name}}</option>
                         </select>
                         @if($errors->has('category_id'))
@@ -44,8 +45,8 @@
                 <div class="col-md-4">
                     <div class="form-group {{ $errors->has('sub_category_id') ? 'has-error' : '' }}">
                         <label for="sub_category_id">Sub Kategori*</label>
-                        <select class="form-control" id="sub_category_id" name="sub_category_id" required>
-                            <option>Pilih Sub Kategori</option>
+                        <select class="form-control" id="sub_category_id" name="sub_category_id" readonly required>
+                            <option disabled>Pilih Sub Kategori</option>
                             <option value="{{$letter->sub_category_id}}" selected>{{$letter->sub_category->name}}</option>
                         </select>
                         @if($errors->has('sub_category_id'))
@@ -56,19 +57,9 @@
                     </div>
                 </div>
             </div>
+           @endif 
 
-            <div class="form-group {{ $errors->has('jenis_surat') ? 'has-error' : '' }}">
-                <label for="jenis_surat">Jenis Surat*</label>
-                <select class="form-control" id="jenis_surat" name="jenis_surat" required>
-                    <option value="masuk" @if($letter->jenis_surat == 'masuk') selected @endif>Masuk</option>
-                    <option value="keluar" @if($letter->jenis_surat == 'keluar') selected @endif>Keluar</option>
-                </select>
-                @if($errors->has('jenis_surat'))
-                    <p class="help-block">
-                        {{ $errors->first('jenis_surat') }}
-                    </p>
-                @endif
-            </div>
+           <input type="hidden" id="jenis_surat" name="jenis_surat" value="{{$letter->jenis_surat}}">
 
             <div class="form-group {{ $errors->has('nomor_surat') ? 'has-error' : '' }}">
                 <label for="nomor_surat">Nomor Surat*</label>
@@ -92,9 +83,31 @@
                     </p>
                 @endif
             </div>
+            
+            @if($letter->jenis_surat == 'masuk')
+            <div class="form-group {{ $errors->has('disposisi') ? 'has-error' : '' }}">
+                <label for="disposisi">Disposisi*</label>
+                <select class="form-control" id="disposisi" name="disposisi" required>
+                    <option>Pilih Disposisi</option>
+                    <option value="dukungan_umum_sdm" @if($letter->disposisi == 'dukungan_umum_sdm') selected @endif>DUKUNGAN UMUM (SDM)</option>
+                    <option value="dukungan_umum_sarana" @if($letter->disposisi == 'dukungan_umum_sarana') selected @endif>DUKUNGAN UMUM (SARANA)</option>
+                    <option value="dukungan_umum_it" @if($letter->disposisi == 'dukungan_umum_it') selected @endif>DUKUNGAN UMUM (IT)</option>
+                    <option value="pelayanan" @if($letter->disposisi == 'pelayanan') selected @endif>PELAYANAN</option>
+                    <option value="keuangan_akuntansi" @if($letter->disposisi == 'keuangan_akuntansi') selected @endif>KEUANGAN & AKUNTANSI</option>
+                    <option value="penjualan_inlog" @if($letter->disposisi == 'penjualan_inlog') selected @endif>PENJUALAN & INLOG</option>
+                    <option value="pengolahan" @if($letter->disposisi == 'pengolahan') selected @endif>PENGOLAHAN</option>
+                    <option value="slpk" @if($letter->disposisi == 'slpk') selected @endif>SLPK</option>
+                </select>
+                @if($errors->has('disposisi'))
+                    <p class="help-block">
+                        {{ $errors->first('disposisi') }}
+                    </p>
+                @endif
+            </div>
+            @endif
 
             <div class="form-group {{ $errors->has('perihal') ? 'has-error' : '' }}">
-                <label for="perihal">Perihal*</label>
+                <label for="perihal">Jenis Surat & Pengirim*</label>
                 <textarea class="form-control" id="perihal" name="perihal" required>{{ old('perihal', isset($letter) ? $letter->perihal : '') }}</textarea>
                 @if($errors->has('perihal'))
                     <p class="help-block">
@@ -124,7 +137,7 @@
 @section('js_after')
     <script>
         $( document ).ready(function() {
-            $('#deputy_id').change();
+            //$('#deputy_id').change();
             if($('#jenis_surat').val() == 'keluar') {
                 $('#nomor_surat').prop('disabled', true);
             }
@@ -133,7 +146,7 @@
         $('#deputy_id').on('change', function() {
             $.ajax({
                 type: 'GET',
-                url: 'get_cat/' + this.value,
+                url: '../get_cat/' + this.value,
                 success: function (data) {
                     var $category_id = $('#category_id');
                     var $sub_category_id = $('#sub_category_id');
@@ -145,7 +158,7 @@
                         $category_id.append('<option value=' + data[i].id + '>' + data[i].name + '</option>');
                     }
                     $category_id.change();
-
+                    getRefNo();
                 }
             });
         });
@@ -153,7 +166,7 @@
         $('#category_id').on('change', function() {
             $.ajax({
                 type: 'GET',
-                url: 'get_sub_cat/' + this.value,
+                url: '../get_sub_cat/' + this.value,
                 success: function (data) {
                     var $sub_category_id = $('#sub_category_id');
                     $sub_category_id.empty();
@@ -162,21 +175,20 @@
                         $sub_category_id.append('<option value=' + data[i].id + '>' + data[i].name + '</option>');
                     }
                     $sub_category_id.change();
-
+                    getRefNo();
                 }
             });
         });
 
-        $('#jenis_surat').on('change', function() {
-            if(this.value == 'keluar') {
+        $('#sub_category_id').on('change', function() {
+            getRefNo();
+        });
+
+        function getRefNo() {
+            if($('#jenis_surat').val() == 'keluar') {
                 if($('#deputy_id').val() == 'Pilih Deputy' || $('#category_id').val() == 'Pilih Kategori' || $('#sub_category_id').val() == 'Pilih Sub Kategori')
                 {
-                    $(this).val('masuk');
-                    return Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: 'Isi form deputy / kategori / sub kategori!',
-                    })
+                    return;
                 }
                 $('#nomor_surat').prop('readonly', true);
                 $.ajax({
@@ -191,6 +203,6 @@
                 $('#nomor_surat').prop('readonly', false);
                 $('#nomor_surat').val('');
             } 
-        });
+        }
     </script>    
 @endsection

@@ -37,6 +37,18 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md">
+                    <div class="form-group">
+                        <div class="input-group mb-4">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-city"></i></span>
+                            </div>
+                            <input name="singkatan" class="form-control" placeholder="Singkatan Kategori" type="text" required autofocus>
+                        </div>
+                    </div>
+                </div>
+            </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

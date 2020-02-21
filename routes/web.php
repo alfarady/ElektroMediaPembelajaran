@@ -33,4 +33,5 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('letters/get_cat/{id}', 'LetterController@getCat');
     Route::get('letters/get_sub_cat/{id}', 'LetterController@getSubCat');
     Route::resource('letters', 'LetterController');
+    Route::resource('instance-settings', 'InstanceSettingsController');
 });

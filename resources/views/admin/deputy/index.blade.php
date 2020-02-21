@@ -38,6 +38,9 @@
                             Bagian
                         </th>
                         <th>
+                            Singkatan
+                        </th>
+                        <th>
                             &nbsp;
                         </th>
                     </tr>
@@ -53,6 +56,9 @@
                         </td>
                         <td>
                             {{$value->name_bagian}}
+                        </td>
+                        <td>
+                            {{$value->singkatan ?? ''}}
                         </td>
                         <td>
                             <i class="fa fa-edit fa-lg edit_action" href="{{ action('Admin\DeputyController@edit', $value->id) }}" style="cursor:pointer;margin-right:10px;"></i>

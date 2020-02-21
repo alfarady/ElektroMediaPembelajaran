@@ -32,7 +32,11 @@ class LetterController extends Controller
         $sub_categories = [];
 
         if(request()->input('jenis_surat')) {
-            $data = $data->where('jenis_surat', request()->input('jenis_surat'));
+            if(request()->input('jenis_surat') == 'archive') {
+                $data = $data->onlyTrashed();
+            } else {
+                $data = $data->where('jenis_surat', request()->input('jenis_surat'));
+            }
         }
 
         if(request()->input('deputy_id')) {
@@ -51,6 +55,14 @@ class LetterController extends Controller
 
         if(request()->input('created_by')) {
             $data = $data->where('created_by', request()->input('created_by'));
+        }
+
+        if(request()->input('disposisi')) {
+            $data = $data->where('disposisi', request()->input('disposisi'));
+        }
+
+        if(request()->input('date')) {
+            $data = $data->whereYear('tanggal_surat', '=', request()->input('date'));
         }
 
         $data = $data->get();
@@ -86,12 +98,12 @@ class LetterController extends Controller
 
             Letter::create($input);
 
-            return redirect()->route('admin.letters.index')->with('response', [
+            return redirect()->route('admin.letters.index', ['jenis_surat' => $input['jenis_surat']])->with('response', [
                 'status' => true,
                 'message' => 'Berhasil menambahkan surat'
             ]);
         } catch(\Exception $e) {
-            return redirect()->route('admin.letters.index')->with('response', [
+            return redirect()->route('admin.letters.index', ['jenis_surat' => $input['jenis_surat']])->with('response', [
                 'status' => false,
                 'message' => 'Gagal menambahkan surat'
             ]);
@@ -139,12 +151,12 @@ class LetterController extends Controller
 
             Letter::find($id)->update($input);
 
-            return redirect()->route('admin.letters.index')->with('response', [
+            return redirect()->route('admin.letters.index', ['jenis_surat' => $input['jenis_surat']])->with('response', [
                 'status' => true,
                 'message' => 'Berhasil update surat'
             ]);
         } catch(\Exception $e) {
-            return redirect()->route('admin.letters.index')->with('response', [
+            return redirect()->route('admin.letters.index', ['jenis_surat' => $input['jenis_surat']])->with('response', [
                 'status' => false,
                 'message' => 'Gagal update surat'
             ]);
@@ -160,7 +172,7 @@ class LetterController extends Controller
     public function destroy($id)
     {
         try {
-            Letter::find($id)->delete();
+            Letter::find($id)->forceDelete();
 
             return response()->json(['status' => true, 'message' => "Berhasil menghapus surat"]);
         } catch(\Exception $e) {
@@ -174,9 +186,10 @@ class LetterController extends Controller
     */
     public function getRefNo($deputy_id, $category_id, $sub_category_id)
     {
-        $counter = Letter::where('jenis_surat', 'keluar')->count() + 1;
-        $bagian = Deputy::find($deputy_id)->name_bagian;
-        $category = Category::find($category_id)->name;
+        $default_count = auth()->user()->total_outbox ?? 0;
+        $counter = $default_count + Letter::where('jenis_surat', 'keluar')->count() + 1;
+        $bagian = Deputy::find($deputy_id)->singkatan ?? null;
+        $category = Category::find($category_id)->singkatan ?? '';
         $index = SubCategory::find($sub_category_id)->index;
 
         $noref = '';

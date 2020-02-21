@@ -42,13 +42,21 @@ class SubcategoryController extends Controller
     public function store(Request $request)
     {
         try {
-            $validatedData = $request->validate([
-                'index' => 'required|unique:sub_categories',
-            ]);
+            // $validatedData = $request->validate([
+            //     'index' => 'required|unique:sub_categories',
+            // ]);
 
             $input = $request->all();
+            
+            $isExistIndex = SubCategory::where([
+                'category_id' => $input['category_id'],
+                'index' => $input['index']
+            ])->first();
 
-            SubCategory::create($input);
+            if(!$isExistIndex)
+                SubCategory::create($input);
+            else
+                throw new \Exception();
 
             return redirect()->back()->with('response', [
                 'status' => true,
@@ -97,12 +105,20 @@ class SubcategoryController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $validatedData = $request->validate([
-                'index' => 'required|unique:sub_categories',
-            ]);
             $input = $request->all();
 
-            SubCategory::find($id)->update($input);
+            $isExistIndex = SubCategory::where([
+                'category_id' => $input['category_id'],
+                'index' => $input['index'],
+            ])->first();
+
+            if($isExistIndex){
+                if($isExistIndex->id == $id)
+                    SubCategory::find($id)->update($input);
+                else
+                    throw new \Exception();
+            } else
+                throw new \Exception();
 
             return redirect()->back()->with('response', [
                 'status' => true,
