@@ -11,11 +11,20 @@ class HomeController extends Controller
 {
     public function index()
     {
+        if(auth()->user()->hasRole('Admin'))
+            $letter = new Letter;
+        else $letter = Letter::where('created_by', auth()->user()->id);
+
+        $all = $letter->count();
+        $in = $letter->where('jenis_surat', 'masuk')->count();
+        $out = $letter->where('jenis_surat', 'keluar')->count();
+        $archive = $letter->onlyTrashed()->count();
+
         $counts = (object)[
-            'all' => Letter::count(),
-            'in' => Letter::where('jenis_surat', 'masuk')->count(),
-            'out' => Letter::where('jenis_surat', 'keluar')->count(),
-            'archive' => Letter::onlyTrashed()->count(),
+            'all' => $all,
+            'in' => $in,
+            'out' => $out,
+            'archive' => $archive,
         ];
         return view('home', compact('counts'));
     }
