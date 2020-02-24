@@ -12,7 +12,7 @@ class HomeController extends Controller
     public function index()
     {
         if(auth()->user()->hasRole('Admin'))
-            $letter = new Letter;
+            $letter = new Letter();
         else $letter = Letter::where('created_by', auth()->user()->id);
 
         $all = $letter->count();
