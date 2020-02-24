@@ -80,7 +80,7 @@
             
             @if(request()->input('jenis_surat') == 'masuk')
             <div class="form-group {{ $errors->has('disposisi') ? 'has-error' : '' }}">
-                <label for="disposisi">Disposisi*</label>
+                <label for="disposisi">Forward Ke*</label>
                 <select class="form-control" id="disposisi" name="disposisi" required>
                     <option>Pilih Disposisi</option>
                     <option value="dukungan_umum_sdm" @if(request()->input('disposisi') == 'dukungan_umum_sdm') selected @endif>DUKUNGAN UMUM (SDM)</option>
