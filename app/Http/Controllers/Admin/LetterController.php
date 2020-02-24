@@ -187,7 +187,20 @@ class LetterController extends Controller
     public function getRefNo($deputy_id, $category_id, $sub_category_id)
     {
         $default_count = auth()->user()->total_outbox ?? 0;
-        $counter = $default_count + Letter::where('jenis_surat', 'keluar')->count() + 1;
+        $current_count = Letter::where('jenis_surat', 'keluar')->count();
+
+        if(request()->input('counter')) {
+            $counter = request()->input('counter');
+        } else {
+            if($current_count > 0) {
+                $lastRef = Letter::where('jenis_surat', 'keluar')->orderBy('created_at', 'desc')->first()->nomor_surat;
+                $lastRef = explode('/', $lastRef)[0];
+                $counter = (int)$lastRef+1;
+            } else {
+                $counter = $default_count + Letter::where('jenis_surat', 'keluar')->count() + 1;
+            }
+        }
+
         $bagian = Deputy::find($deputy_id)->singkatan ?? null;
         $category = Category::find($category_id)->singkatan ?? '';
         $index = SubCategory::find($sub_category_id)->index;

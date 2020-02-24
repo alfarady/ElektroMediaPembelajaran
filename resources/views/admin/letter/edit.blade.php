@@ -15,10 +15,10 @@
                 <div class="col-md-4">
                     <div class="form-group {{ $errors->has('deputy_id') ? 'has-error' : '' }}">
                         <label for="deputy_id">Deputy*</label>
-                        <select class="form-control" id="deputy_id" name="deputy_id" readonly required>
-                            <option disabled>Pilih Deputy</option>
+                        <select class="form-control" id="deputy_id" name="deputy_id" required>
+                            <option>Pilih Deputy</option>
                             @foreach ($deputies as $deputy)
-                                <option value="{{$deputy->id}}" @if($deputy->id == $letter->deputy_id) selected @else disabled @endif>{{$deputy->name}}</option>
+                                <option value="{{$deputy->id}}" @if($deputy->id == $letter->deputy_id) selected @endif>{{$deputy->name}}</option>
                             @endforeach
                         </select>
                         @if($errors->has('deputy_id'))
@@ -31,8 +31,8 @@
                 <div class="col-md-4">
                     <div class="form-group {{ $errors->has('category_id') ? 'has-error' : '' }}">
                         <label for="category_id">Kategori*</label>
-                        <select class="form-control" id="category_id" name="category_id" readonly required>
-                            <option disabled>Pilih Kategori</option>
+                        <select class="form-control" id="category_id" name="category_id" required>
+                            <option>Pilih Kategori</option>
                             <option value="{{$letter->category_id}}" selected>{{$letter->category->name}}</option>
                         </select>
                         @if($errors->has('category_id'))
@@ -45,8 +45,8 @@
                 <div class="col-md-4">
                     <div class="form-group {{ $errors->has('sub_category_id') ? 'has-error' : '' }}">
                         <label for="sub_category_id">Sub Kategori*</label>
-                        <select class="form-control" id="sub_category_id" name="sub_category_id" readonly required>
-                            <option disabled>Pilih Sub Kategori</option>
+                        <select class="form-control" id="sub_category_id" name="sub_category_id" required>
+                            <option>Pilih Sub Kategori</option>
                             <option value="{{$letter->sub_category_id}}" selected>{{$letter->sub_category->name}}</option>
                         </select>
                         @if($errors->has('sub_category_id'))
@@ -191,9 +191,10 @@
                     return;
                 }
                 $('#nomor_surat').prop('readonly', true);
+                var counter = $('#nomor_surat').val().split("/")[0];
                 $.ajax({
                     type: 'GET',
-                    url: 'get_ref_no/' + $('#deputy_id').val() + '/' + $('#category_id').val() + '/' + $('#sub_category_id').val(),
+                    url: 'get_ref_no/' + $('#deputy_id').val() + '/' + $('#category_id').val() + '/' + $('#sub_category_id').val() + '?counter=' + ,
                     success: function (data) {
                         console.log(data);
                         $('#nomor_surat').val(data);
