@@ -194,7 +194,7 @@
                 var counter = $('#nomor_surat').val().split("/")[0];
                 $.ajax({
                     type: 'GET',
-                    url: 'get_ref_no/' + $('#deputy_id').val() + '/' + $('#category_id').val() + '/' + $('#sub_category_id').val() + '?counter=' + ,
+                    url: 'get_ref_no/' + $('#deputy_id').val() + '/' + $('#category_id').val() + '/' + $('#sub_category_id').val() + '?counter=' + counter,
                     success: function (data) {
                         console.log(data);
                         $('#nomor_surat').val(data);
