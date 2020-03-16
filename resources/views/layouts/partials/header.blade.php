@@ -95,7 +95,7 @@
                     <i class="fa fa-angle-down ml-5"></i>
                 </button>
                 <div class="dropdown-menu dropdown-menu-right min-width-200" aria-labelledby="page-header-user-dropdown">
-                    <a class="dropdown-item" href="{{action('Admin\InstanceSettingsController@index')}}">
+                    <a class="dropdown-item" href="#">
                         <i class="fa fa-cog mr-5"></i> Pengaturan
                     </a>
                     <div class="dropdown-divider"></div>

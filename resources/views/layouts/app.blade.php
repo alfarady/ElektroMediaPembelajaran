@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>SIMASPOS</title>
+    <title>Media Pembelajaran - Sistem Komputer</title>
     <link rel="icon" href="https://www.posindonesia.co.id/./img/favicon.png" />
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet" />
     <link href="css/adminltev3.css" rel="stylesheet" />

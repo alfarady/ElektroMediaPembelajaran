@@ -26,8 +26,7 @@
                 <!-- Logo -->
                 <div class="content-header-item">
                     <a class="link-effect font-w700" href="/dashboard">
-                        <img width="30" height="30" src="https://img2.pngdownload.id/20180503/dcq/kisspng-pos-indonesia-mail-point-of-sale-logo-indonesia-5aeb329c06fe29.0749394715253633560287.jpg"></img>
-                        <span class="font-size-xl text-dual-primary-dark">SIMAS</span><span class="font-size-xl" style="color: orange">POS</span>
+                        <span class="font-size-xl" style="color: #15499A">SIS</span><span class="font-size-xl" style="color: #DAAF47">KOM</span>
                     </a>
                 </div>
                 <!-- END Logo -->
@@ -39,16 +38,16 @@
         <!-- Side User -->
         <div class="content-side content-side-full content-side-user px-10 align-parent">
             <!-- Visible only in mini mode -->
-            <div class="sidebar-mini-visible-b align-v animated fadeIn">
+            {{-- <div class="sidebar-mini-visible-b align-v animated fadeIn">
                 <img class="img-avatar img-avatar32" src="{{ asset('media/avatars/avatar15.jpg') }}" alt="">
-            </div>
+            </div> --}}
             <!-- END Visible only in mini mode -->
 
             <!-- Visible only in normal mode -->
             <div class="sidebar-mini-hidden-b text-center">
-                <a class="img-link" href="javascript:void(0)">
+                {{-- <a class="img-link" href="javascript:void(0)">
                     <img class="img-avatar" src="{{ asset('media/avatars/avatar15.jpg') }}" alt="">
-                </a>
+                </a> --}}
                 <ul class="list-inline mt-10">
                     <li class="list-inline-item">
                         <a class="link-effect text-dual-primary-dark font-size-xs font-w600 text-uppercase" href="javascript:void(0)">{{ auth()->user()->name }}</a>
@@ -71,13 +70,13 @@
                     <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-file"></i><span class="sidebar-mini-hide">Semua Surat</span></a>
                     <ul>
                         <li>
-                            <a class="{{ request()->is('examples/plugin') ? ' active' : '' }}" href="{{ action('Admin\LetterController@index', ['jenis_surat' => 'masuk']) }}">Surat Masuk</a>
+                            <a class="{{ request()->is('examples/plugin') ? ' active' : '' }}" href="#">Surat Masuk</a>
                         </li>
                         <li>
-                            <a class="{{ request()->is('examples/blank') ? ' active' : '' }}" href="{{ action('Admin\LetterController@index', ['jenis_surat' => 'keluar']) }}">Surat Keluar</a>
+                            <a class="{{ request()->is('examples/blank') ? ' active' : '' }}" href="#">Surat Keluar</a>
                         </li>
                         <li>
-                            <a class="{{ request()->is('examples/blank') ? ' active' : '' }}" href="{{ action('Admin\LetterController@index', ['jenis_surat' => 'archive']) }}">Arsip Surat</a>
+                            <a class="{{ request()->is('examples/blank') ? ' active' : '' }}" href="#">Arsip Surat</a>
                         </li>
                     </ul>
                 </li>
@@ -86,14 +85,14 @@
                     <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-bulb"></i><span class="sidebar-mini-hide">Data Master</span></a>
                     <ul>
                         <li>
-                            <a class="{{ request()->is('examples/plugin') ? ' active' : '' }}" href="{{ action('Admin\DeputyController@index') }}">Deputy</a>
+                            <a class="{{ request()->is('examples/plugin') ? ' active' : '' }}" href="#">Deputy</a>
                         </li>
                         <li>
-                            <a class="{{ request()->is('examples/blank') ? ' active' : '' }}" href="{{ action('Admin\CategoryController@index') }}">Kategori</a>
+                            <a class="{{ request()->is('examples/blank') ? ' active' : '' }}" href="#">Kategori</a>
                         </li>
                         </li>
                         <li>
-                            <a class="{{ request()->is('examples/blank') ? ' active' : '' }}" href="{{ action('Admin\SubcategoryController@index') }}"">Sub Kategori</a>
+                            <a class="{{ request()->is('examples/blank') ? ' active' : '' }}" href="#">Sub Kategori</a>
                         </li>
                     </ul>
                 </li>

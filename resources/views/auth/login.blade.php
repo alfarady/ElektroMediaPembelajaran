@@ -4,14 +4,14 @@
     <div class="login-logo">
         <div class="login-logo">
             <a href="#">
-                <span style="font-size: 20px">Selamat Datang di Website SIMASPOS</span><br>
-                PT. POS INDONESIA
+                <img src="{{ asset('images/unesa.png') }}" width="200" height="200"></img><br>
+                <h5 class="mt-3"><small>Media Pembelajaran</small></h5>
+                <h5>Sistem Komputer</h5>
             </a>
         </div>
     </div>
     <div class="card">
         <div class="card-body login-card-body">
-            <p class="login-box-msg">Sign in to start your session</p>
             @if(\Session::has('message'))
                 <p class="alert alert-info">
                     {{ \Session::get('message') }}
@@ -53,11 +53,11 @@
 
 
 
-            <p class="mb-1">
+            {{-- <p class="mb-1">
                 <a class="" href="{{ route('password.request') }}">
                     {{ trans('global.forgot_password') }}
                 </a>
-            </p>
+            </p> --}}
             <p class="mb-0">
 
             </p>
@@ -66,6 +66,9 @@
             </p>
         </div>
         <!-- /.login-card-body -->
+    </div>
+    <div class="row justify-content-center">
+        Afifatul Vara Maudina
     </div>
 </div>
 @endsection

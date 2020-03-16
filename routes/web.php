@@ -21,3 +21,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     Route::resource('users', 'UsersController');
 });
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::resource('materi', 'MateriController');
+});
