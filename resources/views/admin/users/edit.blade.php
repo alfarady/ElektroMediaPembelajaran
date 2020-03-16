@@ -11,7 +11,7 @@
             @csrf
             @method('PUT')
             <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
-                <label for="name">Nama Instansi*</label>
+                <label for="name">Nama*</label>
                 <input type="text" id="name" name="name" class="form-control" value="{{ old('name', isset($user) ? $user->name : '') }}">
                 @if($errors->has('name'))
                     <p class="help-block">
@@ -45,42 +45,6 @@
                 <p class="helper-block">
                     {{ trans('global.user.fields.password_helper') }}
                 </p>
-            </div>
-            <div class="form-group {{ $errors->has('province') ? 'has-error' : '' }}">
-                <label for="province">Provinsi</label>
-                <input type="text" id="province" name="province" class="form-control" value="{{ $user->province ?? '' }}">
-                @if($errors->has('province'))
-                    <p class="help-block">
-                        {{ $errors->first('province') }}
-                    </p>
-                @endif
-            </div>
-            <div class="form-group {{ $errors->has('city') ? 'has-error' : '' }}">
-                <label for="city">Kota</label>
-                <input type="text" id="city" name="city" class="form-control" value="{{ $user->city ?? '' }}">
-                @if($errors->has('city'))
-                    <p class="help-block">
-                        {{ $errors->first('city') }}
-                    </p>
-                @endif
-            </div>
-            <div class="form-group {{ $errors->has('address') ? 'has-error' : '' }}">
-                <label for="address">Alamat</label>
-                <input type="text" id="address" name="address" class="form-control" value="{{ $user->address ?? '' }}">
-                @if($errors->has('address'))
-                    <p class="help-block">
-                        {{ $errors->first('address') }}
-                    </p>
-                @endif
-            </div>
-            <div class="form-group {{ $errors->has('phone') ? 'has-error' : '' }}">
-                <label for="phone">Telephone/FAX</label>
-                <input type="text" id="phone" name="phone" class="form-control" value="{{ $user->phone ?? '' }}">
-                @if($errors->has('phone'))
-                    <p class="help-block">
-                        {{ $errors->first('phone') }}
-                    </p>
-                @endif
             </div>
             <div class="form-group {{ $errors->has('roles') ? 'has-error' : '' }}">
                 <label for="roles">{{ trans('global.user.fields.roles') }}*

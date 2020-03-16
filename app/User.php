@@ -9,8 +9,9 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
     use SoftDeletes, Notifiable;
 
@@ -30,14 +31,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'province',
-        'city',
-        'address',
-        'phone',
         'created_at',
         'updated_at',
         'deleted_at',
-        'total_outbox',
         'remember_token',
         'email_verified_at',
     ];
@@ -62,6 +58,15 @@ class User extends Authenticatable
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new ResetPassword($token));
+    }
+
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+    public function getJWTCustomClaims()
+    {
+        return [];
     }
 
     public function roles()

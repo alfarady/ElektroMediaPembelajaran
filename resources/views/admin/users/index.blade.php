@@ -1,17 +1,12 @@
 @extends('layouts.backend')
 @section('content')
-@can('user_create')
-    <div style="margin-bottom: 10px;" class="row">
-        <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route("admin.users.create") }}">
-                {{ trans('global.add') }} {{ trans('global.user.title_singular') }}
-            </a>
-        </div>
-    </div>
-@endcan
+
 <div class="card">
     <div class="card-header">
         {{ trans('global.user.title_singular') }} {{ trans('global.list') }}
+        <a class="btn btn-primary float-right" href="{{ route("admin.users.create") }}">
+            {{ trans('global.add') }} {{ trans('global.user.title_singular') }}
+        </a>
     </div>
 
     <div class="card-body">
@@ -23,13 +18,10 @@
 
                         </th>
                         <th>
-                            Nama Instansi
+                            Nama
                         </th>
                         <th>
                             {{ trans('global.user.fields.email') }}
-                        </th>
-                        <th>
-                            Alamat
                         </th>
                         <th>
                             {{ trans('global.user.fields.roles') }}
@@ -52,31 +44,23 @@
                                 {{ $user->email ?? '' }}
                             </td>
                             <td>
-                                {{ $user->email_verified_at ?? '' }}
-                            </td>
-                            <td>
                                 @foreach($user->roles as $key => $item)
                                     <span class="badge badge-info">{{ $item->title }}</span>
                                 @endforeach
                             </td>
                             <td>
-                                @can('user_show')
-                                    <a class="btn btn-primary" href="{{ route('admin.users.show', $user->id) }}">
-                                        {{ trans('global.view') }}
-                                    </a>
-                                @endcan
                                 @can('user_edit')
                                     <a class="btn btn-info" href="{{ route('admin.users.edit', $user->id) }}">
                                         {{ trans('global.edit') }}
                                     </a>
                                 @endcan
-                                @can('user_delete')
+                                @if(auth()->user()->id != $user->id)
                                     <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <input type="submit" class="btn btn-danger" value="{{ trans('global.delete') }}">
                                     </form>
-                                @endcan
+                                @endif
                             </td>
 
                         </tr>

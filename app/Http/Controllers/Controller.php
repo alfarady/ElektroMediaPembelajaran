@@ -11,7 +11,7 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    protected function respondArray($eloquent, $is_paginated = false)
+    protected function respondArray($eloquent, $is_paginated = true)
     {
         if($is_paginated) {
             $start = 0;

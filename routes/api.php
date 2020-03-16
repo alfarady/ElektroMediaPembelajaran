@@ -1,11 +1,11 @@
 <?php
 
-Route::group(['prefix' => 'v1', 'as' => 'admin.', 'namespace' => 'Api\V1\Admin'], function () {
-    Route::apiResource('permissions', 'PermissionsApiController');
+Route::group(['prefix' => 'v1', 'namespace' => 'Api'], function () {
+    Route::post('/login', 'AuthController@login');
+    Route::post('/register', 'AuthController@register');
+    Route::post('/logout', 'AuthController@logout');
+});
 
-    Route::apiResource('roles', 'RolesApiController');
-
-    Route::apiResource('users', 'UsersApiController');
-
-    Route::apiResource('products', 'ProductsApiController');
+Route::group(['prefix' => 'v1', 'namespace' => 'Api', 'middleware' => ['jwt.verify']], function () {
+    Route::apiResource('materi', 'MateriController');
 });
