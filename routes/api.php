@@ -8,4 +8,5 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api'], function () {
 
 Route::group(['prefix' => 'v1', 'namespace' => 'Api', 'middleware' => ['jwt.verify']], function () {
     Route::apiResource('materi', 'MateriController');
+    Route::apiResource('soal', 'SoalController');
 });
