@@ -66,19 +66,15 @@
                         <i class="si si-cup"></i><span class="sidebar-mini-hide">Home</span>
                     </a>
                 </li>
-                <li class="{{ request()->is('examples/*') ? ' open' : '' }}">
-                    <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-file"></i><span class="sidebar-mini-hide">Semua Surat</span></a>
-                    <ul>
-                        <li>
-                            <a class="{{ request()->is('examples/plugin') ? ' active' : '' }}" href="#">Surat Masuk</a>
-                        </li>
-                        <li>
-                            <a class="{{ request()->is('examples/blank') ? ' active' : '' }}" href="#">Surat Keluar</a>
-                        </li>
-                        <li>
-                            <a class="{{ request()->is('examples/blank') ? ' active' : '' }}" href="#">Arsip Surat</a>
-                        </li>
-                    </ul>
+                <li>
+                    <a class="{{ request()->is('materi.index') ? ' active' : '' }}" href="{{ route('materi.index') }}">
+                        <i class="fa fa-book"></i><span class="sidebar-mini-hide">Materi</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="{{ request()->is('soal.index') ? ' active' : '' }}" href="{{ route('soal.index') }}">
+                        <i class="fa fa-scroll"></i><span class="sidebar-mini-hide">Soal</span>
+                    </a>
                 </li>
                 @if(auth()->user()->hasRole('Admin'))
                 <li class="{{ request()->is('examples/*') ? ' open' : '' }}">

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Materi;
+use App\Soal;
 
 use Illuminate\Http\Request;
 
@@ -42,9 +43,8 @@ class MateriController extends Controller
             
             if($request->hasFile('materi_file')) {
                 $name = time().'.'.$request->materi_file->getClientOriginalExtension();
-                // $path = $request->materi_file->move(public_path('uploads/materi'), $name);
-                // dd($path);
-                $materi = $this->readDocx('F:\Other Projects\ElektroMediaPembelajaran\public\uploads/materi\1584351273.docx');
+                $path = $request->materi_file->move(public_path('uploads/materi'), $name);
+                $materi = $this->readDocx($path);
                 $input['materi'] = $materi;
             } else {
                 $input['materi'] = $request->materi;
@@ -69,7 +69,9 @@ class MateriController extends Controller
      */
     public function show($id)
     {
-        //
+        $materi = Materi::find($id);
+        $data = Soal::with(['pilihan', 'materi'])->orderBy('nomor', 'asc')->where('materi_id', $id)->get();
+        return view('admin.soal.index', compact('data', 'materi'));
     }
 
     /**

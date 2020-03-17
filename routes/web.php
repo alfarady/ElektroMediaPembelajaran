@@ -24,4 +24,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
 Route::group(['middleware' => ['auth']], function () {
     Route::resource('materi', 'MateriController');
+    Route::get('soal/getSoalForm', 'SoalController@getSoalForm')->name('soal.form');
+    Route::resource('soal', 'SoalController');
 });
