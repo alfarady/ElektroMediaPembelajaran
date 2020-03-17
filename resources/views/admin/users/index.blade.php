@@ -3,9 +3,9 @@
 
 <div class="card">
     <div class="card-header">
-        {{ trans('global.user.title_singular') }} {{ trans('global.list') }}
+        Semua Siswa
         <a class="btn btn-primary float-right" href="{{ route("admin.users.create") }}">
-            {{ trans('global.add') }} {{ trans('global.user.title_singular') }}
+            Tambah Siswa
         </a>
     </div>
 
@@ -22,6 +22,9 @@
                         </th>
                         <th>
                             {{ trans('global.user.fields.email') }}
+                        </th>
+                        <th>
+                            Kelas
                         </th>
                         <th>
                             {{ trans('global.user.fields.roles') }}
@@ -44,8 +47,11 @@
                                 {{ $user->email ?? '' }}
                             </td>
                             <td>
+                                {{ $user->kelas->name ?? '' }}
+                            </td>
+                            <td>
                                 @foreach($user->roles as $key => $item)
-                                    <span class="badge badge-info">{{ $item->title }}</span>
+                                    <span class="badge badge-info">{{ $item->title == 'User' ? 'Siswa' : 'Admin' }}</span>
                                 @endforeach
                             </td>
                             <td>

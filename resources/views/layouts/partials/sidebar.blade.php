@@ -67,37 +67,27 @@
                     </a>
                 </li>
                 <li>
-                    <a class="{{ request()->is('materi.index') ? ' active' : '' }}" href="{{ route('materi.index') }}">
+                    <a class="{{ request()->is('materi') ? ' active' : '' }}" href="{{ route('materi.index') }}">
                         <i class="fa fa-book"></i><span class="sidebar-mini-hide">Materi</span>
                     </a>
                 </li>
                 <li>
-                    <a class="{{ request()->is('soal.index') ? ' active' : '' }}" href="{{ route('soal.index') }}">
+                    <a class="{{ request()->is('soal') ? ' active' : '' }}" href="{{ route('soal.index') }}">
                         <i class="fa fa-scroll"></i><span class="sidebar-mini-hide">Soal</span>
                     </a>
                 </li>
-                @if(auth()->user()->hasRole('Admin'))
-                <li class="{{ request()->is('examples/*') ? ' open' : '' }}">
+                <li class="{{ request()->is('kelas') || request()->is('admin/users') ? ' open' : '' }}">
                     <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-bulb"></i><span class="sidebar-mini-hide">Data Master</span></a>
                     <ul>
                         <li>
-                            <a class="{{ request()->is('examples/plugin') ? ' active' : '' }}" href="#">Deputy</a>
+                            <a class="{{ request()->is('kelas') ? ' active' : '' }}" href="{{ route('kelas.index') }}">Kelas</a>
                         </li>
                         <li>
-                            <a class="{{ request()->is('examples/blank') ? ' active' : '' }}" href="#">Kategori</a>
+                            <a class="{{ request()->is('admin/users') ? ' active' : '' }}" href="/admin/users">Data Siswa</a>
                         </li>
-                        </li>
-                        <li>
-                            <a class="{{ request()->is('examples/blank') ? ' active' : '' }}" href="#">Sub Kategori</a>
                         </li>
                     </ul>
                 </li>
-                <li>
-                    <a class="{{ request()->is('admin/users') ? ' active' : '' }}" href="/admin/users">
-                        <i class="si si-cup"></i><span class="sidebar-mini-hide">User Management</span>
-                    </a>
-                </li>
-                @endif
             </ul>
         </div>
         <!-- END Side Navigation -->

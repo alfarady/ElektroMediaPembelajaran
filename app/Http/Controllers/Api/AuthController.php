@@ -6,6 +6,7 @@ use App\User;
 use App\Kecamatan;
 use App\Desa;
 use App\Dusun;
+use App\Kelas;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -73,7 +74,7 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        $input = $request->only(['name', 'username', 'password']);
+        $input = $request->only(['name', 'username', 'password', 'kelas_id']);
 
         if(User::where('email', $input['username'])->first()) {
             return response()->json([
@@ -87,6 +88,7 @@ class AuthController extends Controller
             'name' => $input['name'],
             'email' => $input['username'],
             'password' => app('hash')->make($input['password']),
+            'kelas_id' => $input['kelas_id']
         ]);
 
         $user->roles()->sync(2);
@@ -121,6 +123,12 @@ class AuthController extends Controller
                 ]
             ], 500);
         }
+    }
+
+    public function getKelas()
+    {
+        $data = new Kelas();
+        return $this->respondArray($data);
     }
 
     public function getAuthenticatedUser()

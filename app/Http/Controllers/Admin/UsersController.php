@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Http\Request;
 use App\Role;
 use App\User;
+use App\Kelas;
 
 class UsersController extends Controller
 {
@@ -26,8 +27,9 @@ class UsersController extends Controller
         abort_unless(\Gate::allows('user_create'), 403);
 
         $roles = Role::all()->pluck('title', 'id');
+        $kelas = Kelas::all()->pluck('name', 'id');
 
-        return view('admin.users.create', compact('roles'));
+        return view('admin.users.create', compact('roles', 'kelas'));
     }
 
     public function store(Request $request)
@@ -45,10 +47,11 @@ class UsersController extends Controller
         abort_unless(\Gate::allows('user_edit'), 403);
 
         $roles = Role::all()->pluck('title', 'id');
+        $kelas = Kelas::all()->pluck('name', 'id');
 
         $user->load('roles');
 
-        return view('admin.users.edit', compact('roles', 'user'));
+        return view('admin.users.edit', compact('roles', 'user', 'kelas'));
     }
 
     public function update(Request $request, User $user)

@@ -64,6 +64,24 @@
                     {{ trans('global.user.fields.roles_helper') }}
                 </p>
             </div>
+            <div class="form-group {{ $errors->has('kelas') ? 'has-error' : '' }}">
+                <label for="kelas">Kelas*
+                <select name="kelas_id" id="kelas" class="form-control select2">
+                    @foreach($kelas as $id => $kelas)
+                        <option value="{{ $id }}" {{ (in_array($id, old('kelas', [])) || isset($user) && $user->kelas == $id) ? 'selected' : '' }}>
+                            {{ $kelas }}
+                        </option>
+                    @endforeach
+                </select>
+                @if($errors->has('kelas'))
+                    <p class="help-block">
+                        {{ $errors->first('kelas') }}
+                    </p>
+                @endif
+                <p class="helper-block">
+                    {{ trans('global.user.fields.roles_helper') }}
+                </p>
+            </div>
             <div>
                 <input class="btn btn-danger" type="submit" value="{{ trans('global.save') }}">
             </div>

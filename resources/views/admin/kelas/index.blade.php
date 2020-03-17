@@ -1,26 +1,13 @@
 @extends('layouts.backend')
 @section('content')
-<div style="margin-bottom: 10px;" class="row">
-    <div class="col-lg-12">
-        <button type="button"
-            class="btn btn-success btn-modal"
-            data-href="{{action('Admin\DeputyController@create')}}"
-            data-container=".add_form">{{ __('Tambah Deputy') }}</button>
-    </div>
-</div>
-
-@if (\Session::has('response'))
-    <div class="alert @if(\Session::get('response')['status']) alert-success @else alert-error @endif alert-dismissible fade show" role="alert">
-        {!! \Session::get('response')['message'] !!}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-@endif
 
 <div class="card">
     <div class="card-header">
-        List Deputy
+        Semua Kelas
+        <button type="button"
+            class="btn btn-primary btn-modal float-right"
+            data-href="{{action('KelasController@create')}}"
+            data-container=".add_form">{{ __('Tambah Kelas') }}</button>
     </div>
 
     <div class="card-body">
@@ -32,13 +19,7 @@
 
                         </th>
                         <th>
-                            Deputy
-                        </th>
-                        <th>
-                            Bagian
-                        </th>
-                        <th>
-                            Singkatan
+                            Kelas
                         </th>
                         <th>
                             &nbsp;
@@ -55,14 +36,8 @@
                             {{$value->name}}
                         </td>
                         <td>
-                            {{$value->name_bagian}}
-                        </td>
-                        <td>
-                            {{$value->singkatan ?? ''}}
-                        </td>
-                        <td>
-                            <i class="fa fa-edit fa-lg edit_action" href="{{ action('Admin\DeputyController@edit', $value->id) }}" style="cursor:pointer;margin-right:10px;"></i>
-                            <i class="fa fa-trash fa-lg delete_action" href="{{ action('Admin\DeputyController@destroy', $value->id) }}" style="cursor:pointer;margin-right:10px;"></i>
+                            <i class="fa fa-edit fa-lg edit_action" href="{{ action('KelasController@edit', $value->id) }}" style="cursor:pointer;margin-right:10px;"></i>
+                            <i class="fa fa-trash fa-lg delete_action" href="{{ action('KelasController@destroy', $value->id) }}" style="cursor:pointer;margin-right:10px;"></i>
                         </td>
                     </tr>
                     @endforeach
@@ -109,7 +84,7 @@
         }).then((result) => {
             let promises = Promise.all(ids.map(function (id) {
                 return $.ajax({
-                    url: 'subdistricts/' + id,
+                    url: 'kelas/' + id,
                     type: 'DELETE',
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
