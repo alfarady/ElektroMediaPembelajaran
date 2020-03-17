@@ -104,8 +104,6 @@ class SoalController extends Controller
             return back();
         } catch(\Exception $e) {
             DB::rollBack();
-
-            dd($e);
             
             flash('Gagal menambah soal')->error();
 
