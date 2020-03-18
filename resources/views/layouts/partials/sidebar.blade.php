@@ -63,7 +63,7 @@
             <ul class="nav-main">
                 <li>
                     <a class="{{ request()->is('dashboard') ? ' active' : '' }}" href="/admin">
-                        <i class="si si-cup"></i><span class="sidebar-mini-hide">Home</span>
+                        <i class="fa fa-home"></i><span class="sidebar-mini-hide">Home</span>
                     </a>
                 </li>
                 <li>
@@ -76,8 +76,13 @@
                         <i class="fa fa-scroll"></i><span class="sidebar-mini-hide">Soal</span>
                     </a>
                 </li>
+                <li>
+                    <a class="{{ request()->is('laporan/*') ? ' active' : '' }}" href="{{ route('laporan.index') }}">
+                        <i class="fa fa-flag"></i><span class="sidebar-mini-hide">Laporan</span>
+                    </a>
+                </li>
                 <li class="{{ request()->is('kelas') || request()->is('admin/users') ? ' open' : '' }}">
-                    <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-bulb"></i><span class="sidebar-mini-hide">Data Master</span></a>
+                    <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-database"></i><span class="sidebar-mini-hide">Data Master</span></a>
                     <ul>
                         <li>
                             <a class="{{ request()->is('kelas') ? ' active' : '' }}" href="{{ route('kelas.index') }}">Kelas</a>

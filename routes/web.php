@@ -27,4 +27,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('soal/getSoalForm', 'SoalController@getSoalForm')->name('soal.form');
     Route::resource('soal', 'SoalController');
     Route::resource('kelas', 'KelasController');
+    Route::get('laporan/{id}/jawaban/{user_id}', 'LaporanController@getJawaban');
+    Route::resource('laporan', 'LaporanController');
 });

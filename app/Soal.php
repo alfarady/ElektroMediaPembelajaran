@@ -17,4 +17,9 @@ class Soal extends Model
     {
         return $this->hasMany(Pilihan::class);
     }
+
+    public function jawaban()
+    {
+        return $this->hasMany(Jawaban::class);
+    }
 }
