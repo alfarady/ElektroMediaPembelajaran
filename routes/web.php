@@ -29,4 +29,5 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('kelas', 'KelasController');
     Route::get('laporan/{id}/jawaban/{user_id}', 'LaporanController@getJawaban');
     Route::resource('laporan', 'LaporanController');
+    Route::resource('biodata', 'BiodataController');
 });

@@ -18,6 +18,9 @@
                             Nama
                         </th>
                         <th>
+                            Kelas
+                        </th>
+                        <th>
                             Jumlah Soal
                         </th>
                         <th>
@@ -38,10 +41,13 @@
                     @foreach($data as $key => $user)
                         <tr data-entry-id="{{ $user->id }}">
                             <td>
-                                {{$key+1}}
+                                
                             </td>
                             <td>
                                 {{ $user->name ?? '' }}
+                            </td>
+                            <td>
+                                {{ $user->kelas ?? '' }}
                             </td>
                             <td>
                                 {{ $user->jumlah_soal ?? '' }}
@@ -67,4 +73,12 @@
         </div>
     </div>
 </div>
+@endsection
+@section('js_after')
+@parent
+<script>
+    $(function () {
+        $('.datatable:not(.ajaxTable)').DataTable()
+    });
+</script>
 @endsection

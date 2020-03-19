@@ -54,10 +54,12 @@ class LaporanController extends Controller
     {
         $materi = Materi::find($id);
         $data = User::leftJoin('jawabans', 'users.id', '=', 'jawabans.user_id')
+                    ->leftJoin('kelas', 'users.kelas_id', '=', 'kelas.id')
                     ->where('materi_id', $id)
                     ->select([
                         'users.id',
                         'users.name',
+                        'kelas.name as kelas',
                         'materi_id',
                         DB::raw('COUNT(jawabans.id) as jumlah_soal'),
                         DB::raw("(SELECT COUNT(jawabans.id) FROM jawabans WHERE jawabans.is_true = 1 AND user_id = users.id AND materi_id = jawabans.materi_id) as jumlah_benar"),
