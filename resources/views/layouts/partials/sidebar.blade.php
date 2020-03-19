@@ -81,7 +81,7 @@
                         <i class="fa fa-flag"></i><span class="sidebar-mini-hide">Laporan</span>
                     </a>
                 </li>
-                <li class="{{ request()->is('kelas') || request()->is('admin/users') ? ' open' : '' }}">
+                <li class="{{ request()->is('kelas') || request()->is('admin/users') || request()->is('biodata') ? ' open' : '' }}">
                     <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-database"></i><span class="sidebar-mini-hide">Data Master</span></a>
                     <ul>
                         <li>
@@ -90,6 +90,8 @@
                         <li>
                             <a class="{{ request()->is('admin/users') ? ' active' : '' }}" href="/admin/users">Data Siswa</a>
                         </li>
+                        <li>
+                            <a class="{{ request()->is('biodata') ? ' active' : '' }}" href="{{ route('biodata.index') }}">Biodata</a>
                         </li>
                     </ul>
                 </li>

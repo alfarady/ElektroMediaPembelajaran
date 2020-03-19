@@ -38,8 +38,12 @@ class AuthController extends Controller
                     ->select([
                         'id',
                         'name',
-                        'email'
+                        'email',
+                        'kelas_id'
                     ])
+                    ->with(['kelas' => function($q) {
+                        $q->select(['id', 'name']);
+                    }])
                     ->first();
 
             if(!$user->hasRole('User')) {
@@ -95,6 +99,18 @@ class AuthController extends Controller
         
         JWTAuth::factory()->setTTL(1440);
         $token = JWTAuth::fromUser($user);
+            
+        $user = User::where('id', $user->id)
+            ->select([
+                'id',
+                'name',
+                'email',
+                'kelas_id'
+            ])
+            ->with(['kelas' => function($q) {
+                $q->select(['id', 'name']);
+            }])
+            ->first();
 
         $user->jwt = $token;
         

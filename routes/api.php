@@ -11,4 +11,5 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api', 'middleware' => ['jwt.veri
     Route::apiResource('materi', 'MateriController');
     Route::apiResource('soal', 'SoalController');
     Route::apiResource('ljk', 'JawabanController');
+    Route::apiResource('biodata', 'BiodataController');
 });
