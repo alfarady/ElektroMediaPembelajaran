@@ -68,7 +68,7 @@
                 <label for="kelas">Kelas*
                 <select name="kelas_id" id="kelas" class="form-control select2">
                     @foreach($kelas as $id => $kelas)
-                        <option value="{{ $id }}" {{ (in_array($id, old('kelas', [])) || isset($user) && $user->kelas == $id) ? 'selected' : '' }}>
+                        <option value="{{ $id }}" {{ (in_array($id, old('kelas', [])) || isset($user) && $user->kelas->id == $id) ? 'selected' : '' }}>
                             {{ $kelas }}
                         </option>
                     @endforeach
