@@ -92,6 +92,7 @@ class LaporanController extends Controller
         $data = Jawaban::join('soals', 'jawabans.soal_id', '=', 'soals.id')
                         ->where('user_id', $user_id)
                         ->where('jawabans.materi_id', $id)
+                        ->orderBy('soals.nomor')
                         ->get();
 
         foreach($data as $key => $value) {
