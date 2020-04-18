@@ -76,7 +76,7 @@ class LaporanController extends Controller
     {
         $user = User::leftJoin('jawabans', 'users.id', '=', 'jawabans.user_id')
                     ->where('materi_id', $id)
-                    ->where('users.id', $user_id)
+                    ->where('jawabans.user_id', $user_id)
                     ->select([
                         'users.id',
                         'users.name',
