@@ -31,7 +31,7 @@
             <div id="editor-container" class="mb-3" style="height:200px;">
         </div>
 
-        <div class="form-group">
+        <div class="form-group d-none">
             {!! Form::label('editor-container', 'Atau Upload Materi') !!}
             {!! Form::file('materi_file', 
                 ['class' => 'form-control', 'placeholder' => 'Pilih Docx']); 
