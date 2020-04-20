@@ -31,3 +31,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('laporan', 'LaporanController');
     Route::resource('biodata', 'BiodataController');
 });
+
+Route::get('/privacy-policy', function() {
+    return view('pp');
+});
